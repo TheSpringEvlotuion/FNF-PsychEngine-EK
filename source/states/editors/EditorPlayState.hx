@@ -496,18 +496,20 @@ class EditorPlayState extends MusicBeatSubstate
 		adaptStrumline(opponentStrums);
 		adaptStrumline(playerStrums);
 
-		for (i in 0...playerStrums.members.length) {
-			var keyShowcase = new KeybindShowcase(
-				playerStrums.members[i].x, 
-				ClientPrefs.data.downScroll ? playerStrums.members[i].y - 30 : playerStrums.members[i].y + playerStrums.members[i].height + 5, 
-				ClientPrefs.keyBinds.get(keysArray[i]), 
-				FlxG.camera, 
-				playerStrums.members[i].width / 2, 
-				PlayState.SONG.mania);
-			keyShowcase.onComplete = function() {
-				remove(keyShowcase);
+		if (ClientPrefs.data.keybindShowcase) {
+			for (i in 0...playerStrums.members.length) {
+				var keyShowcase = new KeybindShowcase(
+					playerStrums.members[i].x, 
+					ClientPrefs.data.downScroll ? playerStrums.members[i].y - 30 : playerStrums.members[i].y + playerStrums.members[i].height + 5, 
+					ClientPrefs.keyBinds.get(keysArray[i]), 
+					FlxG.camera, 
+					playerStrums.members[i].width / 2, 
+					PlayState.SONG.mania);
+				keyShowcase.onComplete = function() {
+					remove(keyShowcase);
+				}
+				add(keyShowcase);
 			}
-			add(keyShowcase);
 		}
 	}
 

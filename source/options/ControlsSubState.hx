@@ -80,9 +80,14 @@ class ControlsSubState extends MusicBeatSubstate
 		add(controllerSpr);
 
 		var tipX = 20;
-		var tipY = 660;
-		tipTxt = new FlxText(tipX, tipY + 24, 0, '[Keyboard Only] Press Q or E to change the Extra Keys Page.', 16);
-		tipTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		var tipY = FlxG.height - 28;
+		var tipBG = new FlxSprite(0, tipY);
+		tipBG.makeGraphic(FlxG.width, 28, 0xFF000000);
+		tipBG.alpha = 0.5;
+		add(tipBG);
+
+		tipTxt = new FlxText(tipX, tipY + 6, 0, 'Press Q/E to change the Extra Keys Page. Hold SHIFT to scroll 3x faster.', 16);
+		tipTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.NONE, FlxColor.BLACK);
 		tipTxt.borderSize = 2;
 		add(tipTxt);
 
@@ -515,6 +520,8 @@ class ControlsSubState extends MusicBeatSubstate
 
 	function updateText(?move:Int = 0)
 	{
+		if (onKeyboardMode && FlxG.keys.pressed.SHIFT) move = move * 3;
+
 		if(move != 0)
 		{
 			//var dir:Int = Math.round(move / Math.abs(move));
@@ -560,6 +567,9 @@ class ControlsSubState extends MusicBeatSubstate
 		curAlt = false;
 		controllerSpr.animation.play(onKeyboardMode ? 'keyboard' : 'gamepad');
 		createTexts();
+
+		if (onKeyboardMode) tipTxt.text = 'Press Q/E to change the Extra Keys Page. Hold SHIFT to scroll 3x faster.';
+		else tipTxt.text = 'No controller input is supported during gameplay.';
 	}
 
 	function updateAlt(?doSwap:Bool = false)

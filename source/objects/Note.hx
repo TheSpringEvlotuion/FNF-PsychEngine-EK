@@ -379,7 +379,7 @@ class Note extends FlxSprite
 			}
 			var mania = 3;
 			if (PlayState.SONG != null) mania = PlayState.SONG.mania;
-			setGraphicSize(Std.int((width * (ExtraKeysHandler.instance.data.pixelScales[mania] + 0.3)) * PlayState.daPixelZoom));
+			setGraphicSize((width * (ExtraKeysHandler.instance.data.pixelScales[mania] + 0.3)) * PlayState.daPixelZoom);
 			loadPixelNoteAnims();
 			antialiasing = false;
 
@@ -428,7 +428,8 @@ class Note extends FlxSprite
 		}
 		else animation.addByPrefix(noteAnim + 'Scroll', noteAnim + '0');
 
-		setGraphicSize(Std.int(width * ExtraKeysHandler.instance.data.scales[mania]));
+		setGraphicSize(width * ExtraKeysHandler.instance.data.scales[mania]);
+		//trace(width, ExtraKeysHandler.instance.data.scales[mania]);
 		updateHitbox();
 	}
 
@@ -493,6 +494,12 @@ class Note extends FlxSprite
 
 	public function followStrumNote(myStrum:StrumNote, fakeCrochet:Float, songSpeed:Float = 1)
 	{
+		var mania = 3;
+		if (PlayState.SONG != null) mania = PlayState.SONG.mania;
+		var Mscale = ExtraKeysHandler.instance.data.scales[mania];
+		if (PlayState.isPixelStage) Mscale = ExtraKeysHandler.instance.data.pixelScales[mania];
+		var sWidth = Note.swagWidthUnscaled * Mscale;
+
 		var strumX:Float = myStrum.x;
 		var strumY:Float = myStrum.y;
 		var strumAngle:Float = myStrum.angle;
@@ -521,14 +528,20 @@ class Note extends FlxSprite
 				{
 					y -= PlayState.daPixelZoom * 9.5;
 				}
-				y -= (frameHeight * scale.y) - (Note.swagWidth / 2);
+				y -= (frameHeight * scale.y) - (sWidth / 2);
 			}
 		}
 	}
 
 	public function clipToStrumNote(myStrum:StrumNote)
 	{
-		var center:Float = myStrum.y + offsetY + Note.swagWidth / 2;
+		var mania = 3;
+		if (PlayState.SONG != null) mania = PlayState.SONG.mania;
+		var Mscale = ExtraKeysHandler.instance.data.scales[mania];
+		if (PlayState.isPixelStage) Mscale = ExtraKeysHandler.instance.data.pixelScales[mania];
+		var sWidth = Note.swagWidthUnscaled * Mscale;
+
+		var center:Float = myStrum.y + offsetY + sWidth / 2;
 		if(isSustainNote && (mustPress || !ignoreNote) &&
 			(!mustPress || (wasGoodHit || (prevNote.wasGoodHit && !canBeHit))))
 		{

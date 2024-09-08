@@ -20,6 +20,12 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'bool');
 		addOption(option);
 
+		var option:Option = new Option('Keybinds',
+			'If unchecked, your keybinds won\'t show up\nwhen starting a song.',
+			'keybindShowcase',
+			'bool');
+		addOption(option);
+
 		var option:Option = new Option('Opponent Notes',
 			'If unchecked, opponent notes get hidden.',
 			'opponentStrums',

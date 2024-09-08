@@ -16,7 +16,7 @@ class StrumNote extends FlxSprite
 	public var direction:Float = 90;//plan on doing scroll directions soon -bb
 	public var downScroll:Bool = false;//plan on doing scroll directions soon -bb
 	public var sustainReduce:Bool = true;
-	private var trackedScale:Float = 0.7;
+	public var trackedScale:Float = 0.7;
 	private var player:Int;
 	private var initialWidth:Float = 0;
 	
@@ -86,7 +86,7 @@ class StrumNote extends FlxSprite
 			initialWidth = width;
 			//trace(initialWidth);
 
-			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+			setGraphicSize(width * PlayState.daPixelZoom);
 
 			var mania = 3;
 			if (PlayState.SONG != null) mania = PlayState.SONG.mania;
@@ -116,7 +116,7 @@ class StrumNote extends FlxSprite
 			initialWidth = width;
 
 			antialiasing = ClientPrefs.data.antialiasing;
-			setGraphicSize(Std.int(width * trackedScale));
+			setGraphicSize(width * trackedScale);
 
 			var mania = 3;
 			if (PlayState.SONG != null) mania = PlayState.SONG.mania;
@@ -135,7 +135,7 @@ class StrumNote extends FlxSprite
 
 	public function retryBound() {
 		trackedScale = trackedScale * 0.85;
-		setGraphicSize(Std.int(initialWidth * (trackedScale * (PlayState.isPixelStage ? (PlayState.daPixelZoom * (1/ExtraKeysHandler.instance.data.pixelScales[PlayState.SONG.mania])) : 1))));
+		setGraphicSize(initialWidth * (trackedScale * (PlayState.isPixelStage ? PlayState.daPixelZoom /** (1/ExtraKeysHandler.instance.data.pixelScales[PlayState.SONG.mania])) */: 1)));
 		trace(trackedScale);
 		updateHitbox();
 		postAddedToGroup();
@@ -147,7 +147,8 @@ class StrumNote extends FlxSprite
 		var minPaddingStartThresh:Int = 4;
 		//if (PlayState.isPixelStage) minPaddingStartThresh = 3;
 		if (PlayState.SONG.mania > minPaddingStartThresh) {
-			padding = (PlayState.isPixelStage ? 0.001 : 4) * (PlayState.SONG.mania - minPaddingStartThresh);
+			padding = 4 * (PlayState.SONG.mania - minPaddingStartThresh);
+			if (padding > 8) padding = 8;
 		}
 		//trace(padding);
 
@@ -166,7 +167,7 @@ class StrumNote extends FlxSprite
 	 * @param padding I don't know
 	 */
 	public function centerStrum(maniaThresh:Int, padding:Float) {
-		var sWidth = (PlayState.isPixelStage && PlayState.SONG.mania > maniaThresh) ? (180 + ((10 + (5 * (PlayState.SONG.mania - maniaThresh))) * (PlayState.SONG.mania - maniaThresh))) : Note.swagWidthUnscaled;
+		var sWidth = /*(PlayState.isPixelStage && PlayState.SONG.mania > maniaThresh) ? (180 + ((10 + (5 * (PlayState.SONG.mania - maniaThresh))) * (PlayState.SONG.mania - maniaThresh))) : */ Note.swagWidthUnscaled;
 		if (!ClientPrefs.data.middleScroll) {
 			x = player == 0 ? 320 : 960;
 			x += ((sWidth * trackedScale) - padding) * (-((PlayState.SONG.mania+1) / 2) + noteData);
@@ -177,6 +178,7 @@ class StrumNote extends FlxSprite
 			}
 			x += ((sWidth * trackedScale) - padding) * (-((PlayState.SONG.mania+1) / 2) + noteData);
 		}
+		//trace(padding);
 	}
 
 	override function update(elapsed:Float) {
