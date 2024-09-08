@@ -51,10 +51,10 @@
 		},
 		{
 			"name": "SScript",
-			"type": "git",
-			"dir": null,
-			"ref": "c4e241b254595531396d5e52e8401c9adc3f344f",
-			"url": "https://github.com/MobilePorting/SScript"
+                        "type": "git",
+                        "dir": null,
+                        "ref": "main",
+                        "url": "https://github.com/FunkinExtraKeys/SScript.git"
 		},
 		{
 			"name": "tjson",
