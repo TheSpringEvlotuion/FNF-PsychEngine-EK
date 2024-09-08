@@ -72,8 +72,8 @@
 			"name": "linc_luajit",
                         "type": "git",
                         "dir": null,
-                        "ref": "master",
-                        "url": "https://github.com/superpowers04/linc_luajit"
+                        "ref": "main",
+                        "url": "https://github.com/mcagabe19-stuff/linc_luajit-rewriten.git"
 		},
 		{
 			"name": "hxdiscord_rpc",
