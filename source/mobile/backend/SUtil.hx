@@ -6,6 +6,7 @@ import haxe.Exception;
 #if android
 import android.Tools;
 import android.callback.CallBack;
+import android.Permissions as AndroidPermissions;
 #end
 
 /**
