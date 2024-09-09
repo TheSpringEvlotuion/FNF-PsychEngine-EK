@@ -2762,8 +2762,6 @@ class PlayState extends MusicBeatState
 
         #if android
 		var hitboxHold:Array<Bool> = [];
-		var hitboxPress:Array<Bool> = [];
-		var hitboxRelease:Array<Bool> = [];
 		#end
 
 		for (key in keysArray)
@@ -2779,8 +2777,6 @@ class PlayState extends MusicBeatState
         #if android
 		for (hitbox in _hitbox.array) {
 			hitboxHold.push(hitbox.pressed);
-			hitboxPress.push(hitbox.justPressed);
-			hitboxRelease.push(hitbox.justReleased);
 		}
 		#end
 
