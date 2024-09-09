@@ -213,7 +213,7 @@ class PauseSubState extends MusicBeatSubstate
 					holdTime = 0;
 				}
 
-				if(controls.UI_LEFT #if mobile || _virtualpad.buttonLeft.pressed #end || controls.UI_RIGHT #if mobile || _virtualpad.buttonRight.pressed #end)
+				if(controls.UI_LEFT || controls.UI_RIGHT #if mobile || _virtualpad.buttonLeft.pressed || _virtualpad.buttonRight.pressed #end)
 				{
 					holdTime += elapsed;
 					if(holdTime > 0.5)
