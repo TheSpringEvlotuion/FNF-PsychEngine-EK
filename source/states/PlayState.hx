@@ -2791,9 +2791,10 @@ class PlayState extends MusicBeatState
 					keyPressed(i);
 
 	    #if android
-		    for (i in 0...hitboxPress.length)
-				if (hitboxPress[i] && strumsBlocked[i] != true)
-			        keyPressed(i);
+		    if(hitboxPress.contains(true)) 
+			    for (i in 0...hitboxPress.length)
+					if (hitboxPress[i] && strumsBlocked[i] != true)
+				        keyPressed(i);
 		#end
 
 		if (startedCountdown && !inCutscene && !boyfriend.stunned && generatedMusic)
@@ -2837,9 +2838,10 @@ class PlayState extends MusicBeatState
 					keyReleased(i);
 		
 		#if android
-		for (i in 0...hitboxRelease.length)
-		    if (hitboxRelease[i] || strumsBlocked[i] == true)
-			    keyReleased(i);
+		if((strumsBlocked.contains(true)) && hitboxRelease.contains(true))	
+			for (i in 0...hitboxRelease.length)
+			    if (hitboxRelease[i] || strumsBlocked[i] == true)
+				    keyReleased(i);
 		#end
 	}
 
