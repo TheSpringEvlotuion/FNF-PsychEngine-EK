@@ -10,7 +10,7 @@ import android.callback.CallBack;
 
 /**
  * A storage class for mobile.
- * @author Mihai Alexandru (M.A. Jigsaw), Karim Akra and Lily Ross (mcagabe19)
+ * @author Mihai Alexandru (M.A. Jigsaw)
  */
 class SUtil
 {
@@ -40,7 +40,7 @@ class SUtil
 			if (FileSystem.exists(directory) && FileSystem.isDirectory(directory))
 				return;
 		} catch (e:haxe.Exception) {
-			trace('Something went wrong while looking at directory. (${e.message})');
+			trace('Something went wrong while looking at folder. (${e.message})');
 		}
 
 		var total:String = '';
@@ -66,52 +66,51 @@ class SUtil
 						FileSystem.createDirectory(total);
 				}
 				catch (e:Exception)
-					trace('Error while creating directory. (${e.message}');
+					trace('Error while creating folder. (${e.message}');
 			}
 		}
 	}
 
-	public static function saveContent(fileName:String, fileData:String, ?alert:Bool = true):Void
+	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json',
+			fileData:String = 'You forgor to add somethin\' in yo code :3'):Void
 	{
 		try
 		{
 			if (!FileSystem.exists('saves'))
 				FileSystem.createDirectory('saves');
 
-			File.saveContent('saves/$fileName', fileData);
-			if (alert) CoolUtil.showPopUp('$fileName has been saved.', "Success!");
+			File.saveContent('saves/' + fileName + fileExtension, fileData);
+			showPopUp(fileName + " file has been saved.", "Success!");
 		}
 		catch (e:Exception)
-			if (alert) CoolUtil.showPopUp('$fileName couldn\'t be saved.\n(${e.message})', "Error!") else trace('$fileName couldn\'t be saved. (${e.message})');
+			trace('File couldn\'t be saved. (${e.message})');
 	}
 
 	#if android
 	public static function doPermissionsShit():Void
 	{
-		if (AndroidVersion.SDK_INT >= AndroidVersionCode.TIRAMISU)
-			AndroidPermissions.requestPermissions(['READ_MEDIA_IMAGES', 'READ_MEDIA_VIDEO', 'READ_MEDIA_AUDIO']);
+		if (!AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_EXTERNAL_STORAGE')
+			&& !AndroidPermissions.getGrantedPermissions().contains('android.permission.WRITE_EXTERNAL_STORAGE'))
+		{
+			AndroidPermissions.requestPermission('READ_EXTERNAL_STORAGE');
+			AndroidPermissions.requestPermission('WRITE_EXTERNAL_STORAGE');
+			showPopUp('If you accepted the permissions you are all good!' + '\nIf you didn\'t then expect a crash' + '\nPress Ok to see what happens',
+				'Notice!');
+			if (!AndroidEnvironment.isExternalStorageManager())
+				AndroidSettings.requestSetting('MANAGE_APP_ALL_FILES_ACCESS_PERMISSION');
+		}
 		else
-			AndroidPermissions.requestPermissions(['READ_EXTERNAL_STORAGE', 'WRITE_EXTERNAL_STORAGE']);
-
-		if (!AndroidEnvironment.isExternalStorageManager())
 		{
-			if (AndroidVersion.SDK_INT >= AndroidVersionCode.S)
-				AndroidSettings.requestSetting('REQUEST_MANAGE_MEDIA');
-			AndroidSettings.requestSetting('MANAGE_APP_ALL_FILES_ACCESS_PERMISSION');
-		}
-
-		if ((AndroidVersion.SDK_INT >= AndroidVersionCode.TIRAMISU && !AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_MEDIA_IMAGES')) || (AndroidVersion.SDK_INT < AndroidVersionCode.TIRAMISU && !AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_EXTERNAL_STORAGE')))
-			CoolUtil.showPopUp('If you accepted the permissions you are all good!' + '\nIf you didn\'t then expect a crash' + '\nPress OK to see what happens', 'Notice!');
-
-		try
-		{
-			if (!FileSystem.exists(SUtil.getStorageDirectory()))
-				createDirectories(SUtil.getStorageDirectory());
-		}
-		catch (e:Dynamic)
-		{
-			CoolUtil.showPopUp('Please create directory to\n' + SUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
-			LimeSystem.exit(1);
+			try
+			{
+				if (!FileSystem.exists(SUtil.getStorageDirectory()))
+					FileSystem.createDirectory(SUtil.getStorageDirectory());
+			}
+			catch (e:Dynamic)
+			{
+				showPopUp('Please create folder to\n' + SUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
+				LimeSystem.exit(1);
+			}
 		}
 	}
 
@@ -122,16 +121,34 @@ class SUtil
 		return paths.split(',');
 	}
 
-	public static function getExternalDirectory(externalDir:String):String {
+	public static function getExternalDirectory(external:String):String {
 		var daPath:String = '';
 		for (path in checkExternalPaths())
-			if (path.contains(externalDir)) daPath = path;
+			if (path.contains(external)) daPath = path;
 
 		daPath = haxe.io.Path.addTrailingSlash(daPath.endsWith("\n") ? daPath.substr(0, daPath.length - 1) : daPath);
 		return daPath;
 	}
+
+	@:noCompletion
+	public static function get_selectedDir():Null<String>
+	{
+		var saveFilePath = rootDir + 'curCWD.txt';
+		if(!FileSystem.exists(saveFilePath)) return null;
+		return File.getContent(saveFilePath);
+	}
 	#end
 	#end
+	public static function showPopUp(message:String, title:String):Void
+	{
+		#if android
+		AndroidTools.showAlertDialog(title, message, {name: "OK", func: null}, null);
+		#elseif (!ios || !iphonesim)
+		lime.app.Application.current.window.alert(message, title);
+		#else
+		trace('$title - $message');
+		#end
+	}
 }
 
 #if android
