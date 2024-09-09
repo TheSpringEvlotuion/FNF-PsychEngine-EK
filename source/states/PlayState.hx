@@ -2775,8 +2775,8 @@ class PlayState extends MusicBeatState
 		}
 
         #if android
-		for (hitbox in _hitbox.array) {
-			hitboxHold.push(hitbox.pressed);
+		for (i in 0..._hitbox.array.length) {
+			hitboxHold.push(_hitbox.array[i].pressed);
 		}
 		#end
 
