@@ -93,7 +93,7 @@ class TitleState extends MusicBeatState
 		if (ExtraKeysHandler.instance.data.scales == null)
 			MusicBeatState.switchState(new ScaleSimulationState());
 
-		#if CHECK_FOR_UPDATES
+		#if desktop
 		if(ClientPrefs.data.checkForUpdates && !closedState) {
 			trace('checking for update');
 			var http = new haxe.Http("https://fnlookup-apiv2.vercel.app/api?extrakeys");
