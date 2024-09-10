@@ -2790,7 +2790,7 @@ class PlayState extends MusicBeatState
 		    for (i in 0..._hitbox.array.length) {
 			if (_hitbox.array[i].justPressed && strumsBlocked[i] != true)
 			{
-				 keyPressed(i);
+				 onKeyPress(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, true, -1, keysArray[mania][i][0]));
 			}
 		}
 		#end
@@ -2839,7 +2839,7 @@ class PlayState extends MusicBeatState
 		for (i in 0..._hitbox.array.length) {
 			if (_hitbox.array[i].justReleased || strumsBlocked[i] == true)
 			{
-				keyReleased(i);
+				onKeyRelease(new KeyboardEvent(KeyboardEvent.KEY_UP, true, true, -1, keysArray[mania][i][0]));
 			}
 		}
 		#end
