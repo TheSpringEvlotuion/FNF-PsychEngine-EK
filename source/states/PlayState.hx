@@ -2752,15 +2752,6 @@ class PlayState extends MusicBeatState
 		return -1;
 	}
 
-        private function hitboxDataKeyIsPressed(data:Int):Bool
-	{
-		if (_hitbox.array[data].pressed) 
-                {
-                        return true;
-                }
-		return false;
-	}
-
 	// Hold notes
 	private function keysCheck():Void
 	{
