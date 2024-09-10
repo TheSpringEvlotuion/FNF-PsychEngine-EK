@@ -260,7 +260,7 @@ class PlayState extends MusicBeatState
 	public var introSoundsSuffix:String = '';
 
 	// Less laggy controls
-	private var keysArray:Array<Dynamic>;
+	private var keysArray:Array<String>;
 	public var songName:String;
 
 	// Callbacks for stages
@@ -2752,6 +2752,15 @@ class PlayState extends MusicBeatState
 		return -1;
 	}
 
+        private function hitboxDataKeyIsPressed(data:Int):Bool
+	{
+		if (_hitbox.array[data].pressed) 
+                {
+                        return true;
+                }
+		return false;
+	}
+
 	// Hold notes
 	private function keysCheck():Void
 	{
@@ -2790,7 +2799,7 @@ class PlayState extends MusicBeatState
 		    for (i in 0..._hitbox.array.length) {
 			if (_hitbox.array[i].justPressed && strumsBlocked[i] != true)
 			{
-				 onKeyPress(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, true, -1, keysArray[SONG.mania][i][0]));
+				 keyPressed(i);
 			}
 		}
 		#end
@@ -2839,7 +2848,7 @@ class PlayState extends MusicBeatState
 		for (i in 0..._hitbox.array.length) {
 			if (_hitbox.array[i].justReleased || strumsBlocked[i] == true)
 			{
-				onKeyRelease(new KeyboardEvent(KeyboardEvent.KEY_UP, true, true, -1, keysArray[SONG.mania][i][0]));
+				keyReleased(i);
 			}
 		}
 		#end
