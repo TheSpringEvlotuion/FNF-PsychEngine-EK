@@ -3,7 +3,7 @@ package mobile.flixel;
 import flixel.util.FlxGradient;
 import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxDestroyUtil;
-import flixel.ui.FlxButton;
+import mobile.flixel.FlxButton;
 import flixel.FlxSprite;
 import flixel.FlxG;
 import openfl.display.BitmapData;
@@ -26,6 +26,7 @@ class FlxHitbox extends FlxSpriteGroup {
 		for (i in 0 ... keyCount) {
 			var hitboxColor:String = (ClientPrefs.data.dynamicColors ? getDynamicColor(type, i) :  ExtraKeysHandler.instance.data.hitboxColors[type][i]);
 			hitbox.add(add(array[i] = createHitbox(hitboxWidth * i, 0, hitboxWidth, FlxG.height, hitboxColor)));
+			hitbox.stringIDS = ['${mania}_key_${key}'];
 			if (!ClientPrefs.data.hideHitboxHints)
 			    hints.add(add(createHints(hitboxWidth * i, 0, hitboxWidth, FlxG.height, hitboxColor)));
 		}
