@@ -260,7 +260,7 @@ class PlayState extends MusicBeatState
 	public var introSoundsSuffix:String = '';
 
 	// Less laggy controls
-	private var keysArray:Array<String>;
+	private var keysArray:Array<Dynamic>;
 	public var songName:String;
 
 	// Callbacks for stages
