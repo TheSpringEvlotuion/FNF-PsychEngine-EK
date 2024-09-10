@@ -26,7 +26,7 @@ class FlxHitbox extends FlxSpriteGroup {
 		for (i in 0 ... keyCount) {
 			var hitboxColor:String = (ClientPrefs.data.dynamicColors ? getDynamicColor(type, i) :  ExtraKeysHandler.instance.data.hitboxColors[type][i]);
 			hitbox.add(add(array[i] = createHitbox(hitboxWidth * i, 0, hitboxWidth, FlxG.height, hitboxColor)));
-			array[i].stringIDS = ['${type}_key_${keyCount}'];
+			array[i].stringIDs = ['${type}_key_${keyCount}'];
 			if (!ClientPrefs.data.hideHitboxHints)
 			    hints.add(add(createHints(hitboxWidth * i, 0, hitboxWidth, FlxG.height, hitboxColor)));
 		}
