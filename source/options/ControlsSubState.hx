@@ -99,7 +99,7 @@ class ControlsSubState extends MusicBeatSubstate
 		createTexts();
 
 		#if mobile
-		addVirtualPad(FULL, A_B);
+		addVirtualPad(FULL, A_B_X_Y);
 		#end
 	}
 
@@ -337,8 +337,8 @@ class ControlsSubState extends MusicBeatSubstate
 			if(FlxG.keys.justPressed.UP || FlxG.gamepads.anyJustPressed(DPAD_UP) || FlxG.gamepads.anyJustPressed(LEFT_STICK_DIGITAL_UP) #if mobile || _virtualpad.buttonUp.justPressed #end) updateText(-1);
 			else if(FlxG.keys.justPressed.DOWN || FlxG.gamepads.anyJustPressed(DPAD_DOWN) || FlxG.gamepads.anyJustPressed(LEFT_STICK_DIGITAL_DOWN) #if mobile || _virtualpad.buttonDown.justPressed #end) updateText(1);
 
-			if(FlxG.keys.justPressed.Q || FlxG.keys.justPressed.E && onKeyboardMode) {
-				curEKPage += FlxG.keys.justPressed.E ? 1 : -1;
+			if(FlxG.keys.justPressed.Q || FlxG.keys.justPressed.E #if mobile || _virtualpad.buttonX.justPressed || _virtualpad.buttonY.justPressed #end && onKeyboardMode) {
+				curEKPage += FlxG.keys.justPressed.E #if mobile || _virtualpad.buttonY.justPressed #end ? 1 : -1;
 				if (curEKPage < 0) curEKPage = 0;
 				if (curEKPage > ExtraKeysHandler.instance.data.maxKeys) curEKPage = ExtraKeysHandler.instance.data.maxKeys;
 				createTexts();
