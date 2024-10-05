@@ -50,13 +50,6 @@
 			"version": null
 		},
 		{
-			"name": "SScript",
-                        "type": "git",
-                        "dir": null,
-                        "ref": "main",
-                        "url": "https://github.com/FunkinExtraKeys/SScript.git"
-		},
-		{
 			"name": "tjson",
 			"type": "haxelib",
 			"version": "1.4.0"
