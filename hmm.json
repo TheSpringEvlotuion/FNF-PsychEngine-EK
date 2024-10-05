@@ -55,6 +55,13 @@
 			"version": "1.4.0"
 		},
 		{
+                        "name": "SScript",
+                        "type": "git",
+                        "dir": null,
+                        "ref": "main",
+                        "url": "https://github.com/mcagabe19-stuff/SScript-7.7.0.git"
+                },
+		{
 			"name": "flxanimate",
 			"type": "git",
 			"dir": null,
