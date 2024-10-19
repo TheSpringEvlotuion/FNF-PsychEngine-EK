@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Psych Engine Extra Keys" file="PsychEngineExtraKeys" packageName="com.shadowmario.psychengineek" package="com.shadowmario.psychengineek" main="Main" version="0.2.8" company="tposejank" />
+	<app title="Psych Engine Extra Keys" file="PsychEngineExtraKeys" packageName="com.shadowmario.psychengineek" package="com.shadowmario.psychengineek" main="Main" version="0.2.8" company="tposejank" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
